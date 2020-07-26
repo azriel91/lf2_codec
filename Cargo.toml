@@ -2,7 +2,7 @@
 name = "lf2_codec"
 version = "0.1.0"
 authors = ["Azriel Hoh <azriel91@gmail.com>"]
-description = "Decodes Little Fighter 2 (LF2) data files"
+description = "Encodes and decodes Little Fighter 2 (LF2) data files"
 documentation = "https://docs.rs/lf2_codec"
 edition = "2018"
 homepage = "https://github.com/azriel91/lf2_codec"
