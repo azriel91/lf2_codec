@@ -4,7 +4,7 @@ use std::{
     io::{self, BufReader, Error, Write},
 };
 
-use lf2_decode::{DataDecoder, DataEncoder};
+use lf2_codec::{DataDecoder, DataEncoder};
 
 // Type alias for function to run.
 type Operation = fn(BufReader<File>) -> Result<Vec<u8>, Error>;

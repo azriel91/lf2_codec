@@ -1,13 +1,13 @@
-# LF2 Decode
+# LF2 Codec
 
-Decodes Little Fighter 2 (LF2) data files.
+Encodes and decodes Little Fighter 2 (LF2) data files.
 
 ## Usage
 
 ### Library
 
 ```rust
-use lf2_decode::DataDecoder;
+use lf2_codec::DataDecoder;
 
 let character_dat_reader = BufReader::new(File::open("character.dat")?);
 
@@ -26,7 +26,7 @@ cargo run --release -- character.dat > character.txt
 ## Development
 
 ```bash
-git clone git@github.com:azriel91/lf2_decode.git
+git clone git@github.com:azriel91/lf2_codec.git
 git switch -c feature/nnn/short-description # e.g. feature/123/implement-something
 
 # open a PR

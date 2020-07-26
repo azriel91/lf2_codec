@@ -9,7 +9,7 @@
 //! ```rust,edition2018
 //! # use std::io::Error;
 //! #
-//! use lf2_decode::DataEncoder;
+//! use lf2_codec::DataEncoder;
 //!
 //! const CHARACTER_DAT_ENCODED: &[u8] = b"\
 //!   This is sample data as bytes. \
@@ -34,7 +34,7 @@
 //! ```rust,edition2018
 //! # use std::io::Error;
 //! #
-//! use lf2_decode::DataDecoder;
+//! use lf2_codec::DataDecoder;
 //!
 //! const CHARACTER_DAT_ENCODED: &[u8] = b"\
 //!   This is sample data as bytes. \
