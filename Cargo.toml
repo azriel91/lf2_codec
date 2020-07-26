@@ -2,8 +2,12 @@
 name = "lf2_decode"
 version = "0.1.0"
 authors = ["Azriel Hoh <azriel91@gmail.com>"]
+description = "Decodes Little Fighter 2 (LF2) data files"
+documentation = "https://docs.rs/lf2_decode"
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+homepage = "https://github.com/azriel91/lf2_decode"
+keywords = ["lf2"]
+license = "MIT OR Apache-2.0"
+maintenance = { status = "passively-maintained" }
+readme = "README.md"
+repository = "https://github.com/azriel91/lf2_decode"
