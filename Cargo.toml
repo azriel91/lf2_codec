@@ -1,6 +1,6 @@
 [package]
 name = "lf2_codec"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Azriel Hoh <azriel91@gmail.com>"]
 description = "Encodes and decodes Little Fighter 2 (LF2) data files"
 documentation = "https://docs.rs/lf2_codec"
