@@ -37,7 +37,7 @@ println!("{}", decoded);
 
 ## License
 
-Licensed the [Zlib license](LICENSE-Zlib.md).
+Licensed the [Zlib license](LICENSE-ZLIB.md).
 
 ### Contribution
 

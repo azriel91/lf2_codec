@@ -1,6 +1,6 @@
 [package]
 name = "lf2_codec"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Azriel Hoh <azriel91@gmail.com>"]
 description = "Encodes and decodes Little Fighter 2 (LF2) data files"
 documentation = "https://docs.rs/lf2_codec"
@@ -8,6 +8,7 @@ edition = "2018"
 homepage = "https://github.com/azriel91/lf2_codec"
 keywords = ["lf2"]
 license = "Zlib"
+license-file = "LICENSE-ZLIB.md"
 maintenance = { status = "passively-maintained" }
 readme = "README.md"
 repository = "https://github.com/azriel91/lf2_codec"
