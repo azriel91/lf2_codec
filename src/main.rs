@@ -13,7 +13,10 @@ type Error = Box<dyn std::error::Error>;
 type Operation = fn(BufReader<File>) -> Result<Vec<u8>, Error>;
 
 fn print_help() {
-    eprintln!("Usage: {} <character.dat ..>", env!("CARGO_PKG_NAME"));
+    eprintln!(
+        "Usage: {} <encode|decode> <character.dat ..>",
+        env!("CARGO_PKG_NAME")
+    );
 }
 
 fn main() -> Result<(), Error> {
