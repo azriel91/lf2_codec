@@ -7,9 +7,7 @@
 //! ## Encode
 //!
 //! ```rust,edition2018
-//! # use std::io::Error;
-//! #
-//! use lf2_codec::DataEncoder;
+//! use lf2_codec::{DataEncoder, EncodeError};
 //!
 //! const CHARACTER_DAT_ENCODED: &[u8] = b"\
 //!   This is sample data as bytes. \
@@ -18,7 +16,7 @@
 //!   \xe1\xc6\xb5\xca\x83\x93\x97\xdf\xe4\xe2\xac\
 //!   \xdb\xab\xc6\xc0\xd9\xd4\xad\xe3\xd2\xa5";
 //!
-//! # fn main() -> Result<(), Error> {
+//! # fn main() -> Result<(), EncodeError> {
 //! let data = "<bmp_begin>name: Azriel<bmp_end>";
 //!
 //! let encoded = DataEncoder::encode(data.as_bytes())?;
@@ -32,9 +30,7 @@
 //! ## Decode
 //!
 //! ```rust,edition2018
-//! # use std::io::Error;
-//! #
-//! use lf2_codec::DataDecoder;
+//! use lf2_codec::{DataDecoder, DecodeError};
 //!
 //! const CHARACTER_DAT_ENCODED: &[u8] = b"\
 //!   This is sample data as bytes. \
@@ -43,7 +39,7 @@
 //!   \xe1\xc6\xb5\xca\x83\x93\x97\xdf\xe4\xe2\xac\
 //!   \xdb\xab\xc6\xc0\xd9\xd4\xad\xe3\xd2\xa5";
 //!
-//! # fn main() -> Result<(), Error> {
+//! # fn main() -> Result<(), DecodeError> {
 //! let decoded = DataDecoder::decode(CHARACTER_DAT_ENCODED)?;
 //!
 //! let expected = "<bmp_begin>name: Azriel<bmp_end>";
@@ -54,7 +50,17 @@
 //! # }
 //! ```
 
-use std::io::{Error, Read};
+use std::{
+    fs::File,
+    io::{BufReader, Read},
+    path::Path,
+};
+
+pub use crate::{decode_error::DecodeError, encode_error::EncodeError, error::Error};
+
+mod decode_error;
+mod encode_error;
+mod error;
 
 /// Key used to shift the ascii code of each object.
 pub const CAESAR_CIPHER: &[u8] = b"odBearBecauseHeIsVeryGoodSiuHungIsAGo";
@@ -76,7 +82,7 @@ impl DataEncoder {
     /// # Parameters
     ///
     /// * `stream`: The stream of object data to encode.
-    pub fn encode<R>(stream: R) -> Result<Vec<u8>, Error>
+    pub fn encode<R>(stream: R) -> Result<Vec<u8>, EncodeError>
     where
         R: Read,
     {
@@ -92,7 +98,7 @@ impl DataEncoder {
                     encoded.push(encoded_byte);
                     Ok(encoded)
                 }
-                Err(e) => Err(e),
+                Err(error) => Err(EncodeError { error }),
             },
         )
     }
@@ -108,7 +114,7 @@ impl DataDecoder {
     /// # Parameters
     ///
     /// * `stream`: The stream of encoded object data.
-    pub fn decode<R>(stream: R) -> Result<Vec<u8>, Error>
+    pub fn decode<R>(stream: R) -> Result<Vec<u8>, DecodeError>
     where
         R: Read,
     {
@@ -125,8 +131,24 @@ impl DataDecoder {
                         decoded.push(decoded_byte);
                         Ok(decoded)
                     }
-                    Err(e) => Err(e),
+                    Err(error) => Err(DecodeError { error }),
                 },
             )
+    }
+
+    /// Decodes LF2 object data from a file path.
+    ///
+    /// # Parameters
+    ///
+    /// * `path`: Path to the file to decode.
+    pub fn decode_path<P>(path: P) -> Result<Vec<u8>, DecodeError>
+    where
+        P: AsRef<Path>,
+    {
+        let path = AsRef::<Path>::as_ref(&path);
+        let file = File::open(path)?;
+        let buf_reader = BufReader::new(file);
+
+        Self::decode(buf_reader)
     }
 }

@@ -1,10 +1,13 @@
 use std::{
     env,
     fs::File,
-    io::{self, BufReader, Error, Write},
+    io::{self, BufReader, Write},
 };
 
 use lf2_codec::{DataDecoder, DataEncoder};
+
+/// Dynamic error type for simpler code.
+type Error = Box<dyn std::error::Error>;
 
 // Type alias for function to run.
 type Operation = fn(BufReader<File>) -> Result<Vec<u8>, Error>;
@@ -16,12 +19,16 @@ fn print_help() {
 fn main() -> Result<(), Error> {
     let mut args_os = env::args_os();
 
-    // TODO: First argument may be application name, or not.
+    // Skip first argument -- usually application name.
     args_os.next();
 
     let operation: Option<Operation> = match args_os.next() {
-        Some(arg_os) if arg_os == "encode" => Some(DataEncoder::encode),
-        Some(arg_os) if arg_os == "decode" => Some(DataDecoder::decode),
+        Some(arg_os) if arg_os == "encode" => {
+            Some(|reader| DataEncoder::encode(reader).map_err(Error::from))
+        }
+        Some(arg_os) if arg_os == "decode" => {
+            Some(|reader| DataDecoder::decode(reader).map_err(Error::from))
+        }
         _ => None,
     };
 
